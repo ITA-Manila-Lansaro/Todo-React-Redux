@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import TodoList from './TodoList.js';
+import TodoContainer from './containers/TodoContainers';
 
 class App extends React.Component {
 
@@ -11,7 +11,7 @@ class App extends React.Component {
         <div>
             <h2>React To Do List</h2>
         </div>
-        <TodoList/>
+        <TodoContainer/>
     </div>
     );
   }

@@ -3,18 +3,24 @@ import React from 'react';
 
 class ListElements extends React.Component{
 
-    state =  { content : this.props.content,
-                status : this.props.status};
+    state =  {id : this.props.id,
+                content : this.props.content,
+                status : this.props.status,
+                statusBool : this.props.status === "completed"
+            };
 
     changeValue = () =>{
-        this.setState({status : !this.state.status});
+        let isCompleted = !this.state.statusBool
+        this.setState ({statusBool : isCompleted})
+        this.props.updateStatus(isCompleted ? "completed": "active", this.state.id);
     }
 
     render(){
-        
         return (
-        <li className = {this.state.status ? 'doneTodo' : ''}>
-            <input type="checkbox" onChange = {this.changeValue}/> {this.state.content} 
+        <li className = {this.state.statusBool ? 'doneTodo' : ''}>
+            <input type="checkbox" 
+            checked ={this.state.statusBool} 
+            onClick = {this.changeValue}/> {this.state.content} 
         </li>
         );
     }

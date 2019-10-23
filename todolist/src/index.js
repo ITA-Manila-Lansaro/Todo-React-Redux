@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import reducer from "./reducer";
+import reducer from "./reducer/todo";
 import {createStore} from "redux";
 import { Provider } from "react-redux";
 
@@ -11,7 +11,6 @@ import { Provider } from "react-redux";
 const store = createStore(reducer,
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     );
-
 
 ReactDOM.render(
 <Provider store = {store}>

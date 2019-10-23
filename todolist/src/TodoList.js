@@ -1,49 +1,53 @@
 import React from 'react';
 import List from './List.js';
-import { connect } from "react-redux";
+import TodoResource from "./API";
 
 
-class TodoList extends React.Component{
-    state = {inputValue : ''};    
+class TodoList extends React.Component {
+    state = { inputValue: '' };
+
+    componentDidMount() {
+        // fetchAllData()
+        // .then(res => this.props.fetchData(res._embedded.todos));
+        TodoResource.fetchAllData()
+            .then(res => res.json())
+            .then(res => this.props.refreshTodos(res._embedded.todos))
+    }
+
+    //    TodoResource.getAll()
+    //    .then(res => res.json())
+    //    .then(res => {
+    //      console.log("todos res:", res._embedded.todos);
+    //      this.props.refreshTodos( res._embedded.todos)
+    //    })
 
     pushInput = () => {
         // this.state.todos.push({content: this.state.inputValue, status: false});
-        if (this.state.inputValue !== ''){
-            this.props.addNewTodo(this.state.inputValue , false);
+        if (this.state.inputValue !== '') {
+            this.props.addNewtodo(this.state.inputValue, false);
         }
-       
-   }
+    }
 
-   handleInput = (event) =>{
-       
-        this.setState({inputValue : event.target.value});
-    }   
+    handleInput = (event) => {
+        this.setState({ inputValue: event.target.value });
+    }
 
-    render(){
+    render() {
         return (
-    <div>
-        <div>
-            <input className="input-text" type="text" onChange ={this.handleInput} />
-            <button className="addButton" onClick = {this.pushInput}>Add</button>
-        </div>
-        <ol>
-            <List todos = {this.props.todos}/>
-        </ol>
-    </div>
+            <div>
+                <div>
+                    <input className="input-text" type="text" onChange={this.handleInput} />
+                    <button className="addButton" onClick={this.pushInput}>Add</button>
+                </div>
+                <ol>
+                    <List todos={this.props.todos} />
+                </ol>
+            </div>
         );
     }
 }
 
-const mapStateToProps = state => ({
-    todos: state.todos
-  });
-  
-  const mapStateToDispatch = dispatch => ({
-    addNewTodo: (contentVal, status1) =>
-    dispatch({
-        type: "ADD_TODO",
-        payload : {content: contentVal, status: status1}
-    })
-  });
 
-  export default connect(mapStateToProps,mapStateToDispatch)(TodoList);
+
+
+export default TodoList;
